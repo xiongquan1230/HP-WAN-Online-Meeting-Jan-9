@@ -1,0 +1,81 @@
+Minutes for HP-WAN online meeting (9th Jan 9:00~10:30 am GMT)
+
+Attendance (23)
+Zahed, Tim Chown,Adrian,Daniel King,Daniel Huang,Quan Xiong,Yao Liu,Chumeng Wang,Xueyan Song,Kehan Yao,Zongpeng Du,Shiping Xu,Peng Liu,Cancan Huang,
+Huiyue Zhang,Zhengxin Han,Mengyao Han,Junfeng Zhao,Hang Shi,Antoine Fressancourt,Michael Welzl,David Millman,Christopher Walker
+
+Notes captured with thanks to Adrian Farrel and Quan Xiong.
+
+Main presentation from Daniel Huang [link to slides] for HP-WAN On-line Meeting.
+
+Main discussion points include the following: 
+
+Scope of work
+- The scope of the problem is narrowing (which seems to be a good thing).
+- Still a need to show the demarcation between WIT/Transport and Routing areas.
+- Requirements could be numbered, then the use cases can point at specific requirements. That would allow us to see where we need to focus.
+
+State of Art
+- Need to update the state of the art draft with use cases, and more details (e.g., specific numbers for OTT traffic), and application examples (such as BW, file sizes, frequency, transmission and completion times, etc.)
+- Dan plans to chase Tim, Rodney (Arena PAC HPC) and Nick (ESNET) for examples
+- Need to focus on enabling technology discussion and requirements on WIT-related technologies
+- Work with Michael on reviewing his congestion control research and see if anything applies to current HP-WAN discussions
+
+Should we have a WG-forming BoF in Bangkok?
+- General opinion is that we are nowhere near ready.
+- Bolstered by Zahed pointing out that we only get one more chance at an IETF BoF as there is a limit of two
+- Need a better understanding of the use cases, requirements, and to have a first stab at solutions work
+
+Proposed next steps?
+- Use of Internet Drafts and the mailing list is essential
+- Issue new versions of the I-Ds to reflect discussions and firm up use cases /requirements
+- Encourage list discussion of the drafts
+- Plan for side meeting at IETF 122 with the intention of getting focus on what work the IETF might do
+- Discuss/Document early solution proposals, or at least applicable technology and what might need to be modified
+- Determine whether the problem/solutions are WIT area related (and thus pick an AD)
+- Plan for WG Forming BOF at IETF 123 *if* everything lines up
+
+The following are more detailed questions and comments from attendees during the meeting: 
+
+Zahed: Not sure about the requirement of completion time, especially for the specific completion time. The range of requirements for completion time is large, for example, for 1TB data, there is a huge difference in the completion time requirements between 60 seconds and 60 minutes, so more specific application examples and accurate numbers need to be provided. Whether it requires deterministic behavior and the use of condition control mechanisms?
+What does multiple flows coexistence refer to? HP-WAN multiple flows, or competition with other flows?
+
+Daniel: Completion time will be for small packets but not for bulk flows.
+
+Kehan: From the perspective of China Mobile's operators, cross-DC Training is a promising application instance, although it has not been widely deployed yet, it has potential in the coming years.
+
+Daniel K from chat: Good point Zahed. I think we have some good examples from Google Effingo, I'll take an action to capture some other examples from Janet (Tim) and ESNet (Nick).The average mentioned for Effingo is 1.4 EB <1s. We could include some specific application examples in the State-of-the-art I-D.Agree, more specific.
+
+Quan Xiong from chat: I think multiple flows could be HP-WAN flows within an application or different applications. We also need to consider the flows concurrent in the WAN competing resources with HP-WAN.
+
+Cancan Huang from chat: It has a prerequisite that the network is congested. It think in the massive data transmission scenario, congestion should avoid in advance. Since, compared to the small volume traffic, the packet retransmission in ultra large volume will lead to Network paralysis. So, the network resource such as link and bandwidth should be scheduled for specific flows in advance to avoid congestion.
+
+Michael Welzl from chat:
+Some material: a Ph.D. thesis on the topic: 
+https://folk.universitetetioslo.no/michawe/research/students/kashif_minur-diss_final.pdf
+- combining admission and congestion control for minimal completion time. 
+This was perhaps the final paper from the above thesis, IIRC: 
+https://www.sciencedirect.com/science/article/abs/pii/S0167739X11002111?via%3Dihub
+This was work done in my first EC project, another group in our project that worked heavily on admission control + congestion control for FCT minimization was the group of Pascale Vicat-Blanc Primet in Lyon; I think she created a startup out of this work at some point, Google gave me this old page related to this work: 
+https://www.ens-lyon.fr/LIP/RESO/Software/NXE/
+
+Michael Welzl from chat:
+I think scheduling and admission control can be done more opportunistically - without needing end host - network signaling, just based on how the congestion control algorithms play out. E.g.: I see that these 10 flows are going to be too slow, so I need to delay the 2 least urgent ones, and I won't admit a new one because I see that the FCT deadline is at risk.
+
+Tim: There is no problem in lightly loaded networks, but some congestion is evident in limited bandwidth and some large traffic scenarios. There is in R&E space the ESnet work, see https://sense.es.net, but deployment is only in specific limited networks to date.
+
+Zahed: Avoiding congestion through signaling in the network is a common topic discussed by IETF, and there may already be solutions, but it is reasonable to propose this requirement in the HP-WAN scenario. Moreover, it involves the collaboration between the transport layer and routing layer, as well as  cross layer interfaces, requiring a clear distinction between the WIT/Transport and Routing.
+
+Adrian: Agreed, there are already many signaling mechanisms in the IETF, including various mechanisms from the application layer to the network layer, but this faces challenges such as privacy, and the issue of flow priority also needs to be considered.
+
+Zahed: Applications can label and classify data packets, and then inform the network of their priority. The Scone working group seems to be dealing with such issues. Routing can be pre-configured to provide determinism - does the IETF currently have similar work?
+
+Adrian: There is no such work, but RTG has proposals, and OPS and WIT may also have limited exploration, but they are not yet mature. 
+
+Zahed: This is the WIT area and should focus on the technology and protocols of the transport layer. It is necessary to clearly distinguish the boundary between WIT/transport layer and RTG/routing. There may be potential impacts between coordination and scheduling, which may require technologies similar  to SDN controllers.
+
+Tim: RFC 5434 specifies how to successfully host a BoF and the subsequent work should be carried out in accordance with its requirements, given we may want to hold that second and final (WG forming) BoF at some point.
+
+Zahed: We should continue to drive discussions through email lists and updated drafts, and combine specific use cases and requirements to promote the formation of technical solutions. I suggest to hold a side meeting at IETF 122 (Bangkok) for focus discussion, and plan to initiate the WG BoF in the future.
+
+** End of meeting
